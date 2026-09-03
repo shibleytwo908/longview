@@ -12,40 +12,46 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #F4F6F8;
+    --bg: #EEF1F4;
     --surface: #FFFFFF;
-    --surface-alt: #ECF0F3;
-    --border: #DFE5EA;
-    --ink: #17232D;
-    --ink-soft: #5B6B78;
-    --ink-faint: #93A2AC;
-    --cold: #2C6E9E;
-    --warm: #DD8A2E;
-    --accent: #24597F;
-    --accent-soft: #E4EDF3;
-    --radius-lg: 18px;
+    --surface-alt: #E6EAEE;
+    --border: #D2D9DF;
+    --ink: #0B1620;
+    --ink-soft: #42505C;
+    --ink-faint: #64727C;
+    --cold: #1E6FB8;
+    --warm: #E08300;
+    --accent: #17547E;
+    --accent-soft: #DCEAF5;
+    --hero-fg: #FFFFFF;
+    --hero-fg-soft: rgba(255,255,255,0.88);
+    --hero-fg-faint: rgba(255,255,255,0.68);
+    --radius-lg: 20px;
     --radius-md: 12px;
     --radius-sm: 8px;
-    --shadow: 0 1px 2px rgba(23,35,45,0.04), 0 8px 24px rgba(23,35,45,0.06);
+    --shadow: 0 1px 2px rgba(11,22,32,0.05), 0 8px 24px rgba(11,22,32,0.08);
   }
 
   *{ box-sizing: border-box; }
-  html,body{ margin:0; padding:0; }
+  html,body{ margin:0; padding:0; max-width: 100%; overflow-x: hidden; }
   body{
     background: var(--bg);
     color: var(--ink);
-    font-family: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    width: 100%;
   }
 
   .shell{
     max-width: 640px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px 18px 60px;
+    overflow-x: hidden;
   }
 
   /* ---- Header ---- */
@@ -53,23 +59,26 @@
     display:flex;
     align-items:baseline;
     justify-content:space-between;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 18px;
   }
   .wordmark{
-    font-family: "Fraunces", serif;
-    font-weight: 500;
-    font-size: 22px;
-    letter-spacing: -0.01em;
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
+    font-size: 21px;
+    letter-spacing: -0.02em;
     color: var(--ink);
+    flex-shrink: 0;
   }
   .wordmark span{
     color: var(--cold);
-    font-style: italic;
-    font-weight: 400;
+    font-weight: 500;
   }
   .model-picker{
     position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 62%;
   }
   select.model-select{
     appearance: none;
@@ -77,13 +86,18 @@
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--ink-soft);
-    font-family: "Work Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 13px;
     font-weight: 500;
     padding: 8px 30px 8px 12px;
     border-radius: 999px;
     cursor: pointer;
     box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .model-picker::after{
     content: "";
@@ -114,7 +128,7 @@
     border-radius: var(--radius-md);
     padding: 12px 14px;
     font-size: 15px;
-    font-family: "Work Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--ink);
     box-shadow: var(--shadow);
   }
@@ -176,14 +190,19 @@
   /* ---- Hero ---- */
   .hero{
     display:none;
-    padding: 22px 4px 6px;
+    padding: 22px 20px 24px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(165deg, #5CB3F0 0%, #2A7FCC 55%, #135C99 100%);
+    box-shadow: var(--shadow);
+    transition: background 0.3s ease;
   }
   .hero.visible{ display:block; }
   .place-line{
     font-size: 15px;
-    color: var(--ink-soft);
-    font-weight: 500;
-    margin-bottom: 2px;
+    color: var(--hero-fg-soft);
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
   }
   .hero-main{
     display:flex;
@@ -196,34 +215,37 @@
     align-items: flex-start;
   }
   .temp-now{
-    font-family: "Fraunces", serif;
-    font-weight: 300;
-    font-size: 84px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 80px;
     line-height: 0.9;
-    letter-spacing: -0.02em;
-    color: var(--ink);
+    letter-spacing: -0.03em;
+    color: var(--hero-fg);
   }
   .temp-unit{
-    font-family: "Fraunces", serif;
-    font-weight: 300;
-    font-size: 34px;
-    margin-top: 8px;
-    color: var(--ink-soft);
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    margin-top: 6px;
+    color: var(--hero-fg-soft);
   }
-  .hero-icon{ width: 78px; height: 78px; flex-shrink: 0; }
+  .hero-icon{ width: 74px; height: 74px; flex-shrink: 0; }
   .condition-line{
-    font-size: 16px;
-    color: var(--ink);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--hero-fg);
     margin-top: 2px;
   }
   .hilo-line{
     font-size: 14px;
-    color: var(--ink-soft);
+    font-weight: 500;
+    color: var(--hero-fg-soft);
     margin-top: 4px;
   }
   .feels-line{
     font-size: 13px;
-    color: var(--ink-faint);
+    font-weight: 500;
+    color: var(--hero-fg-faint);
     margin-top: 10px;
   }
 
@@ -237,10 +259,10 @@
     padding: 16px 0 18px;
   }
   .section-label{
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--ink-faint);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
     padding: 0 18px 12px;
   }
 
@@ -418,53 +440,148 @@
 
   // ---------------- Weather code -> icon + label ----------------
   // WMO weather interpretation codes
-  function weatherInfo(code, isDay){
+  // tone: 'light' = icon sits on a white card, 'dark' = icon sits on the gradient hero
+  function weatherInfo(code, isDay, tone){
     const day = isDay !== false;
+    const t = tone || 'light';
     const table = {
-      0:  ["Clear sky", day ? iconSun() : iconMoon()],
-      1:  ["Mainly clear", day ? iconSun() : iconMoon()],
-      2:  ["Partly cloudy", day ? iconCloudSun() : iconCloudMoon()],
-      3:  ["Overcast", iconCloud()],
-      45: ["Fog", iconFog()],
-      48: ["Rime fog", iconFog()],
-      51: ["Light drizzle", iconDrizzle()],
-      53: ["Drizzle", iconDrizzle()],
-      55: ["Dense drizzle", iconDrizzle()],
-      56: ["Freezing drizzle", iconDrizzle()],
-      57: ["Freezing drizzle", iconDrizzle()],
-      61: ["Slight rain", iconRain()],
-      63: ["Rain", iconRain()],
-      65: ["Heavy rain", iconRain()],
-      66: ["Freezing rain", iconRain()],
-      67: ["Freezing rain", iconRain()],
-      71: ["Slight snow", iconSnow()],
-      73: ["Snow", iconSnow()],
-      75: ["Heavy snow", iconSnow()],
-      77: ["Snow grains", iconSnow()],
-      80: ["Rain showers", iconRain()],
-      81: ["Rain showers", iconRain()],
-      82: ["Violent showers", iconRain()],
-      85: ["Snow showers", iconSnow()],
-      86: ["Snow showers", iconSnow()],
-      95: ["Thunderstorm", iconThunder()],
-      96: ["Thunderstorm, hail", iconThunder()],
-      99: ["Thunderstorm, hail", iconThunder()]
+      0:  ["Clear sky", day ? iconSun(t) : iconMoon(t)],
+      1:  ["Mainly clear", day ? iconSun(t) : iconMoon(t)],
+      2:  ["Partly cloudy", day ? iconCloudSun(t) : iconCloudMoon(t)],
+      3:  ["Overcast", iconCloud(t)],
+      45: ["Fog", iconFog(t)],
+      48: ["Rime fog", iconFog(t)],
+      51: ["Light drizzle", iconDrizzle(t)],
+      53: ["Drizzle", iconDrizzle(t)],
+      55: ["Dense drizzle", iconDrizzle(t)],
+      56: ["Freezing drizzle", iconDrizzle(t)],
+      57: ["Freezing drizzle", iconDrizzle(t)],
+      61: ["Slight rain", iconRain(t)],
+      63: ["Rain", iconRain(t)],
+      65: ["Heavy rain", iconRain(t)],
+      66: ["Freezing rain", iconRain(t)],
+      67: ["Freezing rain", iconRain(t)],
+      71: ["Slight snow", iconSnow(t)],
+      73: ["Snow", iconSnow(t)],
+      75: ["Heavy snow", iconSnow(t)],
+      77: ["Snow grains", iconSnow(t)],
+      80: ["Rain showers", iconRain(t)],
+      81: ["Rain showers", iconRain(t)],
+      82: ["Violent showers", iconRain(t)],
+      85: ["Snow showers", iconSnow(t)],
+      86: ["Snow showers", iconSnow(t)],
+      95: ["Thunderstorm", iconThunder(t)],
+      96: ["Thunderstorm, hail", iconThunder(t)],
+      99: ["Thunderstorm, hail", iconThunder(t)]
     };
-    return table[code] || ["—", iconCloud()];
+    return table[code] || ["—", iconCloud(t)];
   }
 
-  const ICON_STROKE = 'stroke="#24597F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"';
-  function svgWrap(inner){ return `<svg viewBox="0 0 24 24" ${ICON_STROKE}>${inner}</svg>`; }
-  function iconSun(){ return svgWrap(`<circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/><line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.8" y2="6.8"/><line x1="17.2" y1="17.2" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.8" y2="17.2"/><line x1="17.2" y1="6.8" x2="18.9" y2="5.1"/>`); }
-  function iconMoon(){ return svgWrap(`<path d="M15.5 13.5A7 7 0 0 1 9.5 5a7 7 0 1 0 6 8.5Z"/>`); }
-  function iconCloud(){ return svgWrap(`<path d="M6.5 18h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 18Z"/>`); }
-  function iconCloudSun(){ return svgWrap(`<circle cx="7" cy="7.5" r="2.6"/><line x1="7" y1="1.8" x2="7" y2="3.2"/><line x1="1.8" y1="7.5" x2="3.2" y2="7.5"/><line x1="2.9" y1="3.3" x2="3.9" y2="4.3"/><path d="M9.5 19h8.5a3.5 3.5 0 0 0 .2-7 5 5 0 0 0-9.4.9A3.3 3.3 0 0 0 9.5 19Z"/>`); }
-  function iconCloudMoon(){ return svgWrap(`<path d="M9.2 8.6A3.3 3.3 0 0 1 6 3.5a3.3 3.3 0 1 0 2.6 5.3Z"/><path d="M9.5 19h8.5a3.5 3.5 0 0 0 .2-7 5 5 0 0 0-9.4.9A3.3 3.3 0 0 0 9.5 19Z"/>`); }
-  function iconFog(){ return svgWrap(`<path d="M6.5 12.5h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12.5Z"/><line x1="3.5" y1="17" x2="20.5" y2="17"/><line x1="5.5" y1="20.2" x2="18.5" y2="20.2"/>`); }
-  function iconDrizzle(){ return svgWrap(`<path d="M6.5 13h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 13Z"/><line x1="9" y1="17" x2="8" y2="20"/><line x1="13" y1="17" x2="12" y2="20"/><line x1="17" y1="17" x2="16" y2="20"/>`); }
-  function iconRain(){ return svgWrap(`<path d="M6.5 12h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12Z"/><line x1="8" y1="16" x2="6.5" y2="21"/><line x1="12.5" y1="16" x2="11" y2="21"/><line x1="17" y1="16" x2="15.5" y2="21"/>`); }
-  function iconSnow(){ return svgWrap(`<path d="M6.5 12h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12Z"/><line x1="7.5" y1="17" x2="7.5" y2="21.2"/><line x1="5.6" y1="18" x2="9.4" y2="20.2"/><line x1="9.4" y1="18" x2="5.6" y2="20.2"/><line x1="16.5" y1="17" x2="16.5" y2="21.2"/><line x1="14.6" y1="18" x2="18.4" y2="20.2"/><line x1="18.4" y1="18" x2="14.6" y2="20.2"/>`); }
-  function iconThunder(){ return svgWrap(`<path d="M6.5 11h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 11Z"/><path d="M13 13.5 9.5 18h3l-1 3.5 4.5-5.5h-3Z" fill="#DD8A2E" stroke="#DD8A2E"/>`); }
+  // Sun/bolt stay the same vivid colour on any background; clouds, rain, snow, fog
+  // swap palette depending on whether they sit on a white card ('light') or the
+  // gradient hero ('dark') so they stay legible either way.
+  const SUN_FILL = '#FFB020';
+  const SUN_STROKE = '#E08300';
+  const BOLT_FILL = '#FFB020';
+  function tone(t, light, dark){ return t === 'dark' ? dark : light; }
+
+  function svgWrap(inner, extra){ return `<svg viewBox="0 0 24 24" ${extra || ''}>${inner}</svg>`; }
+
+  function iconSun(t){
+    const ray = tone(t, '#C9821A', 'rgba(255,255,255,0.85)');
+    return svgWrap(`
+      <circle cx="12" cy="12" r="4.6" fill="${SUN_FILL}" stroke="${SUN_STROKE}" stroke-width="0.5"/>
+      <g stroke="${ray}" stroke-width="1.8" stroke-linecap="round">
+        <line x1="12" y1="2.3" x2="12" y2="4.6"/>
+        <line x1="12" y1="19.4" x2="12" y2="21.7"/>
+        <line x1="2.3" y1="12" x2="4.6" y2="12"/>
+        <line x1="19.4" y1="12" x2="21.7" y2="12"/>
+        <line x1="4.9" y1="4.9" x2="6.5" y2="6.5"/>
+        <line x1="17.5" y1="17.5" x2="19.1" y2="19.1"/>
+        <line x1="4.9" y1="19.1" x2="6.5" y2="17.5"/>
+        <line x1="17.5" y1="6.5" x2="19.1" y2="4.9"/>
+      </g>`);
+  }
+  function iconMoon(t){
+    const fill = tone(t, '#3E4E5E', '#FFFFFF');
+    return svgWrap(`<path d="M15.5 13.5A7 7 0 0 1 9.5 5a7 7 0 1 0 6 8.5Z" fill="${fill}"/>`);
+  }
+  function cloudPath(){ return `M6.5 18h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 18Z`; }
+  function iconCloud(t){
+    const fill = tone(t, '#B7C3CD', 'rgba(255,255,255,0.94)');
+    const stroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    return svgWrap(`<path d="${cloudPath()}" fill="${fill}" stroke="${stroke}" stroke-width="1"/>`);
+  }
+  function iconCloudSun(t){
+    const cFill = tone(t, '#C3CDD5', 'rgba(255,255,255,0.94)');
+    const cStroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const ray = tone(t, '#C9821A', 'rgba(255,255,255,0.85)');
+    return svgWrap(`
+      <circle cx="7.2" cy="7" r="2.9" fill="${SUN_FILL}" stroke="${SUN_STROKE}" stroke-width="0.4"/>
+      <g stroke="${ray}" stroke-width="1.4" stroke-linecap="round">
+        <line x1="7.2" y1="1.6" x2="7.2" y2="3"/>
+        <line x1="1.6" y1="7" x2="3" y2="7"/>
+        <line x1="3.1" y1="3" x2="4.1" y2="4"/>
+      </g>
+      <path d="M9.5 19h8.5a3.5 3.5 0 0 0 .2-7 5 5 0 0 0-9.4.9A3.3 3.3 0 0 0 9.5 19Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/>`);
+  }
+  function iconCloudMoon(t){
+    const cFill = tone(t, '#C3CDD5', 'rgba(255,255,255,0.94)');
+    const cStroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const mFill = tone(t, '#3E4E5E', '#FFFFFF');
+    return svgWrap(`
+      <path d="M9.2 8.6A3.3 3.3 0 0 1 6 3.5a3.3 3.3 0 1 0 2.6 5.3Z" fill="${mFill}"/>
+      <path d="M9.5 19h8.5a3.5 3.5 0 0 0 .2-7 5 5 0 0 0-9.4.9A3.3 3.3 0 0 0 9.5 19Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/>`);
+  }
+  function iconFog(t){
+    const fill = tone(t, '#B7C3CD', 'rgba(255,255,255,0.94)');
+    const stroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const line = tone(t, '#8B98A3', 'rgba(255,255,255,0.75)');
+    return svgWrap(`<path d="M6.5 12.5h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12.5Z" fill="${fill}" stroke="${stroke}" stroke-width="1"/><g stroke="${line}" stroke-width="1.6" stroke-linecap="round"><line x1="3.5" y1="17" x2="20.5" y2="17"/><line x1="5.5" y1="20.2" x2="18.5" y2="20.2"/></g>`);
+  }
+  function iconDrizzle(t){
+    const cFill = tone(t, '#B7C3CD', 'rgba(255,255,255,0.94)');
+    const cStroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const drop = tone(t, '#1E6FB8', '#CDE8FF');
+    return svgWrap(`<path d="${cloudPath().replace('18h','13h').replace(/18Z$/,'13Z')}" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/><g stroke="${drop}" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="17" x2="8" y2="20"/><line x1="13" y1="17" x2="12" y2="20"/><line x1="17" y1="17" x2="16" y2="20"/></g>`);
+  }
+  function iconRain(t){
+    const cFill = tone(t, '#B7C3CD', 'rgba(255,255,255,0.94)');
+    const cStroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const drop = tone(t, '#1E6FB8', '#CDE8FF');
+    return svgWrap(`<path d="M6.5 12h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/><g stroke="${drop}" stroke-width="1.9" stroke-linecap="round"><line x1="8" y1="16" x2="6.5" y2="21"/><line x1="12.5" y1="16" x2="11" y2="21"/><line x1="17" y1="16" x2="15.5" y2="21"/></g>`);
+  }
+  function iconSnow(t){
+    const cFill = tone(t, '#B7C3CD', 'rgba(255,255,255,0.94)');
+    const cStroke = tone(t, '#8B98A3', 'rgba(255,255,255,0.5)');
+    const flake = tone(t, '#4F8FC2', '#EAF6FF');
+    return svgWrap(`<path d="M6.5 12h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 12Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/><g stroke="${flake}" stroke-width="1.8" stroke-linecap="round"><line x1="7.5" y1="17" x2="7.5" y2="21.2"/><line x1="5.6" y1="18" x2="9.4" y2="20.2"/><line x1="9.4" y1="18" x2="5.6" y2="20.2"/><line x1="16.5" y1="17" x2="16.5" y2="21.2"/><line x1="14.6" y1="18" x2="18.4" y2="20.2"/><line x1="18.4" y1="18" x2="14.6" y2="20.2"/></g>`);
+  }
+  function iconThunder(t){
+    const cFill = tone(t, '#8B98A3', 'rgba(255,255,255,0.85)');
+    const cStroke = tone(t, '#5B6B78', 'rgba(255,255,255,0.4)');
+    return svgWrap(`<path d="M6.5 11h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 11Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/><path d="M13 13.5 9.5 18h3l-1 3.5 4.5-5.5h-3Z" fill="${BOLT_FILL}" stroke="${BOLT_FILL}"/>`);
+  }
+
+  // ---------------- Hero background ----------------
+  // Mirrors the way iOS Weather tints its hero card by condition + time of day.
+  function heroGradient(code, isDay){
+    const night = !isDay;
+    if(night){
+      if([95,96,99].includes(code)) return 'linear-gradient(165deg, #3B3550 0%, #211D33 55%, #100E1C 100%)';
+      if([71,73,75,77,85,86].includes(code)) return 'linear-gradient(165deg, #4A5A6C 0%, #2E3A48 55%, #171E26 100%)';
+      if([45,48].includes(code)) return 'linear-gradient(165deg, #4C5A66 0%, #303B44 55%, #181E24 100%)';
+      if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'linear-gradient(165deg, #3E4E5E 0%, #263039 55%, #12171C 100%)';
+      if([2,3].includes(code)) return 'linear-gradient(165deg, #384656 0%, #232D37 55%, #11161C 100%)';
+      return 'linear-gradient(165deg, #1C2B45 0%, #101A2E 55%, #070B16 100%)'; // clear night
+    }
+    if([95,96,99].includes(code)) return 'linear-gradient(165deg, #6B6785 0%, #4A4560 55%, #2A2638 100%)';
+    if([71,73,75,77,85,86].includes(code)) return 'linear-gradient(165deg, #A9B9C6 0%, #7C8FA0 55%, #55677A 100%)';
+    if([45,48].includes(code)) return 'linear-gradient(165deg, #A2AFB8 0%, #79868F 55%, #545F68 100%)';
+    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'linear-gradient(165deg, #7893A5 0%, #526E82 55%, #334A5C 100%)';
+    if([2,3].includes(code)) return 'linear-gradient(165deg, #8DA7BC 0%, #5E7C94 55%, #3C566B 100%)';
+    return 'linear-gradient(165deg, #5CB3F0 0%, #2A7FCC 55%, #135C99 100%)'; // clear day
+  }
 
   // ---------------- Geocoding ----------------
   searchInput.addEventListener('input', () => {
@@ -587,7 +704,8 @@
     document.getElementById('placeLine').textContent = region ? `${currentPlace.name} · ${region}` : currentPlace.name;
 
     const cur = data.current;
-    const [condLabel, condIcon] = weatherInfo(cur.weather_code, cur.is_day === 1);
+    const [condLabel, condIcon] = weatherInfo(cur.weather_code, cur.is_day === 1, 'dark');
+    hero.style.background = heroGradient(cur.weather_code, cur.is_day === 1);
     document.getElementById('tempNow').textContent = Math.round(cur.temperature_2m);
     document.getElementById('heroIcon').innerHTML = condIcon;
     document.getElementById('conditionLine').textContent = condLabel;
@@ -608,7 +726,7 @@
       const t = new Date(data.hourly.time[i]);
       const isNow = i === startIdx;
       const label = isNow ? 'Now' : t.toLocaleTimeString([], { hour: 'numeric' });
-      const [, icon] = weatherInfo(data.hourly.weather_code[i], data.hourly.is_day[i] === 1);
+      const [, icon] = weatherInfo(data.hourly.weather_code[i], data.hourly.is_day[i] === 1, 'light');
       const pop = data.hourly.precipitation_probability[i];
       hourlyHtml += `<div class="hour-col">
         <div class="h-time ${isNow ? 'now' : ''}">${label}</div>
@@ -634,7 +752,7 @@
       const t = new Date(data.daily.time[i] + 'T12:00:00');
       const dayLabel = i === 0 ? 'Today' : t.toLocaleDateString([], { weekday: 'short' });
       const dateSub = t.toLocaleDateString([], { day: 'numeric', month: 'short' });
-      const [, icon] = weatherInfo(data.daily.weather_code[i], true);
+      const [, icon] = weatherInfo(data.daily.weather_code[i], true, 'light');
       const lo = Math.round(allMins[i]);
       const hi = Math.round(allMaxs[i]);
       const leftPct = ((allMins[i] - rangeMin) / span) * 100;
