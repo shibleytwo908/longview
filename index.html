@@ -36,14 +36,25 @@
   }
 
   *{ box-sizing: border-box; }
-  html,body{ margin:0; padding:0; max-width: 100%; overflow-x: hidden; }
+  html,body{ margin:0; padding:0; max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body{
-    background: var(--bg);
+    background: #2A7FCC;
     color: var(--ink);
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     width: 100%;
+  }
+
+  /* Fixed full-viewport sky background — stays put while content scrolls over it, like iOS Weather */
+  #sky{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(circle at 22% 10%, rgba(255,214,120,0.55) 0%, rgba(255,214,120,0) 40%);
+    background-color: #2A7FCC;
+    background-repeat: no-repeat;
+    transition: background-color 0.6s ease;
   }
 
   .shell{
@@ -67,11 +78,12 @@
     font-weight: 800;
     font-size: 21px;
     letter-spacing: -0.02em;
-    color: var(--ink);
+    color: #FFFFFF;
     flex-shrink: 0;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.18);
   }
   .wordmark span{
-    color: var(--cold);
+    color: rgba(255,255,255,0.78);
     font-weight: 500;
   }
   .model-picker{
@@ -83,11 +95,13 @@
   select.model-select{
     appearance: none;
     -webkit-appearance: none;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.5);
     color: var(--ink-soft);
     font-family: "Inter", sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     padding: 8px 30px 8px 12px;
     border-radius: 999px;
@@ -123,22 +137,27 @@
   }
   input.search-input{
     flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.5);
     border-radius: var(--radius-md);
     padding: 12px 14px;
-    font-size: 15px;
+    font-size: 16px;
     font-family: "Inter", sans-serif;
     color: var(--ink);
     box-shadow: var(--shadow);
   }
+  input.search-input::placeholder{ color: var(--ink-faint); }
   input.search-input:focus{
     outline: none;
     border-color: var(--cold);
   }
   button.locate-btn{
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.5);
     border-radius: var(--radius-md);
     width: 44px;
     flex-shrink: 0;
@@ -181,20 +200,19 @@
   /* ---- State messaging ---- */
   .message{
     text-align: center;
-    color: var(--ink-soft);
+    color: var(--hero-fg-soft);
     font-size: 14px;
-    padding: 40px 20px;
+    font-weight: 500;
+    padding: 60px 24px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
-  .message.error{ color: #B14732; }
+  .message.error{ color: #FFD3C4; }
 
   /* ---- Hero ---- */
+  /* Sits directly on the #sky background (no card box), like iOS Weather's current-conditions view */
   .hero{
     display:none;
-    padding: 22px 20px 24px;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(165deg, #5CB3F0 0%, #2A7FCC 55%, #135C99 100%);
-    box-shadow: var(--shadow);
-    transition: background 0.3s ease;
+    padding: 8px 4px 26px;
   }
   .hero.visible{ display:block; }
   .place-line{
@@ -203,6 +221,7 @@
     font-weight: 600;
     margin-bottom: 4px;
     letter-spacing: -0.01em;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.18);
   }
   .hero-main{
     display:flex;
@@ -221,6 +240,7 @@
     line-height: 0.9;
     letter-spacing: -0.03em;
     color: var(--hero-fg);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.18);
   }
   .temp-unit{
     font-family: "Inter", sans-serif;
@@ -228,31 +248,37 @@
     font-size: 32px;
     margin-top: 6px;
     color: var(--hero-fg-soft);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.18);
   }
-  .hero-icon{ width: 74px; height: 74px; flex-shrink: 0; }
+  .hero-icon{ width: 74px; height: 74px; flex-shrink: 0; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15)); }
   .condition-line{
     font-size: 17px;
     font-weight: 600;
     color: var(--hero-fg);
     margin-top: 2px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.18);
   }
   .hilo-line{
     font-size: 14px;
     font-weight: 500;
     color: var(--hero-fg-soft);
     margin-top: 4px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.18);
   }
   .feels-line{
     font-size: 13px;
     font-weight: 500;
     color: var(--hero-fg-faint);
     margin-top: 10px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.18);
   }
 
   /* ---- Section labels ---- */
   .section{
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.5);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     margin-top: 16px;
@@ -338,10 +364,11 @@
     margin-top: 22px;
     text-align: center;
     font-size: 12px;
-    color: var(--ink-faint);
+    color: var(--hero-fg-faint);
     line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
-  .footer a{ color: var(--ink-soft); }
+  .footer a{ color: var(--hero-fg-soft); }
 
   @media (max-width: 420px){
     .temp-now{ font-size: 68px; }
@@ -350,6 +377,7 @@
 </style>
 </head>
 <body>
+<div id="sky" aria-hidden="true"></div>
 
 <div class="shell">
 
@@ -563,24 +591,81 @@
     return svgWrap(`<path d="M6.5 11h11a4 4 0 0 0 .3-8 5.5 5.5 0 0 0-10.6 1.2A3.7 3.7 0 0 0 6.5 11Z" fill="${cFill}" stroke="${cStroke}" stroke-width="1"/><path d="M13 13.5 9.5 18h3l-1 3.5 4.5-5.5h-3Z" fill="${BOLT_FILL}" stroke="${BOLT_FILL}"/>`);
   }
 
-  // ---------------- Hero background ----------------
-  // Mirrors the way iOS Weather tints its hero card by condition + time of day.
-  function heroGradient(code, isDay){
-    const night = !isDay;
-    if(night){
-      if([95,96,99].includes(code)) return 'linear-gradient(165deg, #3B3550 0%, #211D33 55%, #100E1C 100%)';
-      if([71,73,75,77,85,86].includes(code)) return 'linear-gradient(165deg, #4A5A6C 0%, #2E3A48 55%, #171E26 100%)';
-      if([45,48].includes(code)) return 'linear-gradient(165deg, #4C5A66 0%, #303B44 55%, #181E24 100%)';
-      if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'linear-gradient(165deg, #3E4E5E 0%, #263039 55%, #12171C 100%)';
-      if([2,3].includes(code)) return 'linear-gradient(165deg, #384656 0%, #232D37 55%, #11161C 100%)';
-      return 'linear-gradient(165deg, #1C2B45 0%, #101A2E 55%, #070B16 100%)'; // clear night
+  // ---------------- Sky background ----------------
+  // Drives the fixed #sky layer behind the whole page — a gradient plus
+  // lightweight atmospheric decoration (glow, cloud blobs, stars, rain/snow
+  // texture) standing in for the photographic backgrounds iOS Weather uses,
+  // built entirely from CSS gradients so nothing has to be fetched or hosted.
+  const skyEl = document.getElementById('sky');
+
+  function conditionGroup(code){
+    if([95,96,99].includes(code)) return 'storm';
+    if([71,73,75,77,85,86].includes(code)) return 'snow';
+    if([45,48].includes(code)) return 'fog';
+    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'rain';
+    if([2,3].includes(code)) return 'cloudy';
+    return 'clear';
+  }
+
+  const SKY_COLORS = {
+    clear:  { day: ['#5CB3F0','#2A7FCC','#135C99'], night: ['#1C2B45','#101A2E','#070B16'] },
+    cloudy: { day: ['#8DA7BC','#5E7C94','#3C566B'], night: ['#384656','#232D37','#11161C'] },
+    fog:    { day: ['#A2AFB8','#79868F','#545F68'], night: ['#4C5A66','#303B44','#181E24'] },
+    rain:   { day: ['#7893A5','#526E82','#334A5C'], night: ['#3E4E5E','#263039','#12171C'] },
+    snow:   { day: ['#A9B9C6','#7C8FA0','#55677A'], night: ['#4A5A6C','#2E3A48','#171E26'] },
+    storm:  { day: ['#6B6785','#4A4560','#2A2638'], night: ['#3B3550','#211D33','#100E1C'] }
+  };
+
+  // Fixed, deterministic star field (percent positions) — reused for every clear/cloudy night.
+  const STAR_POINTS = [
+    [8,10],[18,6],[27,14],[35,4],[44,18],[52,8],[61,15],[70,5],[78,12],[88,7],
+    [14,24],[24,30],[40,26],[58,28],[73,24],[85,30],[6,34],[95,20],[48,36],[30,40]
+  ];
+
+  function skyDecoration(group, isDay){
+    const layers = [];
+
+    if(group === 'clear'){
+      layers.push(isDay
+        ? 'radial-gradient(circle at 24% 12%, rgba(255,214,120,0.55) 0%, rgba(255,214,120,0) 42%)'
+        : 'radial-gradient(circle at 78% 10%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 4%, rgba(255,255,255,0) 7%)');
     }
-    if([95,96,99].includes(code)) return 'linear-gradient(165deg, #6B6785 0%, #4A4560 55%, #2A2638 100%)';
-    if([71,73,75,77,85,86].includes(code)) return 'linear-gradient(165deg, #A9B9C6 0%, #7C8FA0 55%, #55677A 100%)';
-    if([45,48].includes(code)) return 'linear-gradient(165deg, #A2AFB8 0%, #79868F 55%, #545F68 100%)';
-    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'linear-gradient(165deg, #7893A5 0%, #526E82 55%, #334A5C 100%)';
-    if([2,3].includes(code)) return 'linear-gradient(165deg, #8DA7BC 0%, #5E7C94 55%, #3C566B 100%)';
-    return 'linear-gradient(165deg, #5CB3F0 0%, #2A7FCC 55%, #135C99 100%)'; // clear day
+
+    if(['cloudy','rain','snow','storm','fog'].includes(group)){
+      layers.push('radial-gradient(ellipse 60% 26% at 18% 20%, rgba(255,255,255,0.30), rgba(255,255,255,0) 70%)');
+      layers.push('radial-gradient(ellipse 55% 24% at 78% 14%, rgba(255,255,255,0.22), rgba(255,255,255,0) 70%)');
+      layers.push('radial-gradient(ellipse 70% 30% at 48% 32%, rgba(255,255,255,0.16), rgba(255,255,255,0) 70%)');
+    }
+
+    if(!isDay && (group === 'clear' || group === 'cloudy')){
+      STAR_POINTS.forEach(([x,y]) => {
+        layers.push(`radial-gradient(1.4px 1.4px at ${x}% ${y}%, rgba(255,255,255,0.85), rgba(255,255,255,0) 100%)`);
+      });
+    }
+
+    if(group === 'rain' || group === 'storm'){
+      layers.push('repeating-linear-gradient(115deg, rgba(255,255,255,0.10) 0 2px, rgba(255,255,255,0) 2px 18px)');
+    }
+
+    if(group === 'snow'){
+      layers.push('radial-gradient(1.6px 1.6px at 15% 55%, rgba(255,255,255,0.5), rgba(255,255,255,0) 100%)');
+      layers.push('radial-gradient(1.6px 1.6px at 35% 70%, rgba(255,255,255,0.5), rgba(255,255,255,0) 100%)');
+      layers.push('radial-gradient(1.6px 1.6px at 55% 50%, rgba(255,255,255,0.5), rgba(255,255,255,0) 100%)');
+      layers.push('radial-gradient(1.6px 1.6px at 75% 68%, rgba(255,255,255,0.5), rgba(255,255,255,0) 100%)');
+      layers.push('radial-gradient(1.6px 1.6px at 90% 45%, rgba(255,255,255,0.5), rgba(255,255,255,0) 100%)');
+    }
+
+    return layers.join(', ');
+  }
+
+  function applySky(code, isDay){
+    const group = conditionGroup(code);
+    const stops = SKY_COLORS[group][isDay ? 'day' : 'night'];
+    const baseGradient = `linear-gradient(165deg, ${stops[0]} 0%, ${stops[1]} 55%, ${stops[2]} 100%)`;
+    const decoration = skyDecoration(group, isDay);
+    skyEl.style.backgroundImage = decoration ? `${decoration}, ${baseGradient}` : baseGradient;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', stops[1]);
   }
 
   // ---------------- Geocoding ----------------
@@ -643,21 +728,25 @@
     loadForecast();
   }
 
-  locateBtn.addEventListener('click', () => {
+  function useCurrentLocation(onFail){
     if(!navigator.geolocation){
-      showMessage('Location access is not available in this browser.', true);
+      if(onFail) onFail();
+      else showMessage('Location access is not available in this browser — search for a place instead.', true);
       return;
     }
     showMessage('Finding your location…');
-    navigator.geolocation.getCurrentPosition(async (pos) => {
+    navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       // Reverse-lookup a friendly name via the geocoding search on nearest coordinates isn't
       // directly supported, so label it generically and let the forecast timezone fill in detail.
       selectPlace({ name: 'Current location', admin1: '', country: '', latitude, longitude });
     }, () => {
-      showMessage('Could not get your location — search for a place instead.', true);
+      if(onFail) onFail();
+      else showMessage('Could not get your location — search for a place instead.', true);
     });
-  });
+  }
+
+  locateBtn.addEventListener('click', () => useCurrentLocation());
 
   modelSelect.addEventListener('change', () => {
     if(currentPlace) loadForecast();
@@ -705,7 +794,7 @@
 
     const cur = data.current;
     const [condLabel, condIcon] = weatherInfo(cur.weather_code, cur.is_day === 1, 'dark');
-    hero.style.background = heroGradient(cur.weather_code, cur.is_day === 1);
+    applySky(cur.weather_code, cur.is_day === 1);
     document.getElementById('tempNow').textContent = Math.round(cur.temperature_2m);
     document.getElementById('heroIcon').innerHTML = condIcon;
     document.getElementById('conditionLine').textContent = condLabel;
@@ -783,8 +872,11 @@
     messageArea.innerHTML = `<div class="message ${isError ? 'error' : ''}">${escapeHtml(text)}</div>`;
   }
 
-  // Default landing message
-  showMessage('Search for a place in Europe to see its forecast.');
+  // On open, try the visitor's current location first (like iOS Weather's first-launch
+  // behaviour); fall back to a plain prompt to search if permission is denied/unavailable.
+  useCurrentLocation(() => {
+    showMessage('Search for a place in Europe to see its forecast, or allow location access to see yours.');
+  });
 
 })();
 </script>
